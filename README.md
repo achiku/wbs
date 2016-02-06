@@ -1,4 +1,4 @@
-# wbs
+# wbs [![Build Status](https://travis-ci.org/achiku/wbs.svg?branch=master)](https://travis-ci.org/achiku/wbs)
 
 Watch, build, and (re)start Go net/http server, customizeable by toml configuration file
 
