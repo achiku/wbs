@@ -18,6 +18,11 @@ type WbsWatcher struct {
 	TargetFileExt []string
 }
 
+// Close close watcher
+func (w *WbsWatcher) Close() {
+	w.w.Close()
+}
+
 // initWatcher add watch target files to watcher
 func (w *WbsWatcher) initWatcher() {
 	var excludeDirRegexps []*regexp.Regexp
@@ -55,7 +60,6 @@ func NewWbsWatcher(config *WbsConfig) (*WbsWatcher, error) {
 		log.Fatalf("failed to create watcher: %s", err)
 		return watcher, err
 	}
-	defer w.Close()
 	watcher = &WbsWatcher{
 		w:             w,
 		TargetDirs:    config.WatchTargetDirs,

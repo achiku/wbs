@@ -11,6 +11,7 @@ func TestNewWbsWatcher(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
+	defer watcher.Close()
 
 	t.Log(watcher.ExcludeDirs)
 	t.Log(watcher.TargetDirs)

@@ -59,6 +59,8 @@ func main() {
 					runner.Serve()
 					log.Println("serevr restarted")
 				}
+			case err := <-watcher.w.Errors:
+				log.Println("error:", err)
 			}
 		}
 	}()
