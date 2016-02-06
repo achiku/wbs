@@ -20,6 +20,12 @@ go get -u github.com/achiku/wbs
 wbs
 ```
 
+or 
+
+```
+wbs -c wbsconfig.toml
+```
+
 ## Configuration
 
 ```
