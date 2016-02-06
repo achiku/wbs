@@ -16,7 +16,7 @@ func main() {
 		config *WbsConfig
 		err    error
 	)
-	if configFile != nil {
+	if *configFile != "" {
 		config, err = NewWbsConfig(*configFile)
 		if err != nil {
 			log.Fatal(err)
