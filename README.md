@@ -8,7 +8,7 @@ Watch, build, and (re)start Go net/http server, customizeable by toml configurat
 
 ## Why created
 
-This is certainly yet another auto-build-reload tool for go net/http. I had been using [fresh](https://github.com/pilu/fresh), but development of this tool got really inactive from middle of the last year. So, I decided to rewrite from the ground up, adding more flexibility by using toml configuration file, making it possible to use `gb` or `gom` to biuld binary, adding bunch of tests, and keeping code structure simple so that it will be easy to contribute.
+This tool is yet another auto-rebuild-reloader for go net/http. I had been using [fresh](https://github.com/pilu/fresh), but development of this tool got really inactive from middle of the last year. So, I decided to rewrite from the ground up, adding more flexibility by using toml configuration file, making it possible to use `gb` or `gom` to biuld binary, adding bunch of tests, and keeping code structure simple so that it will be easy to contribute.
 
 This tool was built by just spending 5 hours of my weekend, and not really sophisticated at this stage, so pull-requests and issue reports are all very welcomed :)
 
@@ -134,3 +134,42 @@ start_options = ["-v"]
 ## Contributing
 
 Pull requests for new features, bug fixes, and suggestions are welcome!
+
+### Install Gom
+
+This project is using [gom](https://github.com/mattn/gom) for dependency management.
+
+```
+$ go get -u github.com/mattn/gom
+$ gom install
+$ tree -d vendor
+vendor
+├── bin
+├── github.com
+│   ├── BurntSushi
+│   │   └── toml
+│   │       ├── _examples
+│   │       └── cmd
+│   │           ├── toml-test-decoder
+│   │           ├── toml-test-encoder
+│   │           └── tomlv
+│   └── mattn
+│       └── go-shellwords
+├── gopkg.in
+│   └── fsnotify.v1
+└── pkg
+    └── darwin_amd64
+        ├── github.com
+        │   ├── BurntSushi
+        │   ├── howeyc
+        │   └── mattn
+        └── gopkg.in
+
+20 directories
+```
+
+### Test
+
+```
+$ go test -v
+```
