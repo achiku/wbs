@@ -7,7 +7,7 @@ Watch, build, and (re)start Go net/http server, customizeable by toml configurat
 
 This is certainly yet another auto-build-reload tool for go net/http (actually it can be used much wider range since it just does watch-build-restart loop for a server, and all commands are configurable). I had been using [fresh](https://github.com/pilu/fresh), but development of this tool got really inactive from middle of the last year. So, I decided to rewrite from the ground up, adding more flexibility by using toml configuration file, and cleaner code structure.
 
-This tool was built by just spending my day off, and not really sophisticated at this stage, so pull-requests are all very welcomed :)
+This tool was built by just spending 5 hours of my weekend, and not really sophisticated at this stage, so pull-requests and issue reports are all very welcomed :)
 
 
 ## Installation
