@@ -3,7 +3,6 @@ package main
 import (
 	"flag"
 	"log"
-	"os"
 
 	"gopkg.in/fsnotify.v1"
 )
@@ -12,6 +11,7 @@ func main() {
 	configFile := flag.String("c", "", "configuration file path")
 	flag.Parse()
 
+	mainLogger := NewLogFunc("main")
 	var (
 		config *WbsConfig
 		err    error
@@ -20,7 +20,6 @@ func main() {
 		config, err = NewWbsConfig(*configFile)
 		if err != nil {
 			log.Fatal(err)
-			os.Exit(1)
 		}
 	} else {
 		config = NewWbsDefaultConfig()
@@ -48,19 +47,15 @@ func main() {
 		for {
 			select {
 			case event := <-watcher.w.Events:
-				log.Println("event:", event)
 				if event.Op&fsnotify.Write == fsnotify.Write {
-					log.Println("file modified:", event.Name)
-					log.Println("restarting serevr")
+					e := event.String()
+					mainLogger("file modified: %s", e)
 					runner.Stop()
-					log.Println("serevr stopped")
 					runner.Build()
-					log.Println("build completed")
 					runner.Serve()
-					log.Println("serevr restarted")
 				}
 			case err := <-watcher.w.Errors:
-				log.Println("error:", err)
+				mainLogger("error:", err)
 			}
 		}
 	}()

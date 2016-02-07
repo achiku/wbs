@@ -10,6 +10,8 @@ import (
 	"path/filepath"
 )
 
+var watcherLog = NewLogFunc("watcher")
+
 // WbsWatcher file wather struct
 type WbsWatcher struct {
 	w             *fsnotify.Watcher
@@ -40,7 +42,7 @@ func (w *WbsWatcher) initWatcher() {
 			}
 			for _, s := range w.TargetFileExt {
 				if filepath.Ext(path) == s {
-					log.Printf("start watching %s", path)
+					watcherLog("start watching %s", path)
 					err := w.w.Add(path)
 					if err != nil {
 						log.Fatal(err)
@@ -57,7 +59,7 @@ func NewWbsWatcher(config *WbsConfig) (*WbsWatcher, error) {
 	var watcher *WbsWatcher
 	w, err := fsnotify.NewWatcher()
 	if err != nil {
-		log.Fatalf("failed to create watcher: %s", err)
+		watcherLog("failed to create watcher: %s", err)
 		return watcher, err
 	}
 	watcher = &WbsWatcher{

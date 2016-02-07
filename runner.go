@@ -1,11 +1,21 @@
 package main
 
 import (
-	"log"
+	"io"
 	"os"
 	"os/exec"
 	"path/filepath"
 )
+
+var runnerLog = NewLogFunc("runner")
+var builderLog = NewLogFunc("builder")
+
+type runnerLogWriter struct{}
+
+func (a runnerLogWriter) Write(p []byte) (n int, err error) {
+	runnerLog(string(p))
+	return len(p), nil
+}
 
 // WbsRunner runner struct
 type WbsRunner struct {
@@ -22,8 +32,7 @@ type WbsRunner struct {
 func createBuildTargetDir(path string) error {
 	if _, err := os.Stat(path); os.IsNotExist(err) {
 		if err := os.Mkdir(path, 0755); err != nil {
-			log.Fatal(err)
-			return err
+			builderLog(err.Error())
 		}
 	}
 	return nil
@@ -31,42 +40,51 @@ func createBuildTargetDir(path string) error {
 
 // Build execute build command with configured options
 func (r *WbsRunner) Build() error {
-	log.Printf("starting build: %s %s", r.BuildCommand, r.BuildOptions)
+	builderLog("starting build: %s %s", r.BuildCommand, r.BuildOptions)
 	createBuildTargetDir(r.BuildTargetDir)
 	cmd := exec.Command(r.BuildCommand, r.BuildOptions...)
 	out, err := cmd.CombinedOutput()
 	if err != nil {
-		log.Fatal(err)
-		return err
+		builderLog(err.Error())
 	}
-	log.Printf("\n" + string(out))
+	builderLog("\n" + string(out))
 	return nil
 }
 
 // Server execute binary with configured options
 func (r *WbsRunner) Serve() error {
-	log.Printf("starting server: %s %s", r.StartCommand, r.StartOptions)
+	runnerLog("starting server: %s %s", r.StartCommand, r.StartOptions)
 	cmd := exec.Command(r.StartCommand, r.StartOptions...)
-	err := cmd.Start()
+
+	stderr, err := cmd.StderrPipe()
 	if err != nil {
-		log.Fatal(err)
-		return err
+		runnerLog(err.Error())
+	}
+	stdout, err := cmd.StdoutPipe()
+	if err != nil {
+		runnerLog(err.Error())
+	}
+	rl := runnerLogWriter{}
+	go io.Copy(rl, stderr)
+	go io.Copy(rl, stdout)
+
+	err = cmd.Start()
+	if err != nil {
+		runnerLog(err.Error())
 	}
 	r.Pid = cmd.Process.Pid
-	log.Printf("starting server: PID %d", r.Pid)
+	runnerLog("starting server: PID %d", r.Pid)
 	return nil
 }
 
 func (r *WbsRunner) Stop() error {
-	log.Printf("stopping server: PID %d", r.Pid)
+	runnerLog("stopping server: PID %d", r.Pid)
 	p, err := os.FindProcess(r.Pid)
 	if err != nil {
-		log.Fatal(err)
-		return err
+		runnerLog(err.Error())
 	}
 	if err = p.Kill(); err != nil {
-		log.Fatal(err)
-		return err
+		runnerLog(err.Error())
 	}
 	return nil
 }
