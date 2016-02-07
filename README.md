@@ -1,7 +1,7 @@
 # wbs
 
 [![Build Status](https://travis-ci.org/achiku/wbs.svg?branch=master)](https://travis-ci.org/achiku/wbs)
-[![LICENSE](https://img.shields.io/github/license/mashape/apistatus.svg)](https://github.com/achiku/wbs/blob/master/LICENSE)
+[![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/achiku/wbs/master/LICENSE)
 
 Watch, build, and (re)start Go net/http server, customizeable by toml configuration file
 
