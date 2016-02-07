@@ -31,10 +31,12 @@ func (r *WbsRunner) Serve() error {
 	stderr, err := cmd.StderrPipe()
 	if err != nil {
 		runnerLog(err.Error())
+		return err
 	}
 	stdout, err := cmd.StdoutPipe()
 	if err != nil {
 		runnerLog(err.Error())
+		return err
 	}
 	rl := runnerLogWriter{}
 	go io.Copy(rl, stderr)
@@ -43,6 +45,7 @@ func (r *WbsRunner) Serve() error {
 	err = cmd.Start()
 	if err != nil {
 		runnerLog(err.Error())
+		return err
 	}
 	r.Pid = cmd.Process.Pid
 	runnerLog("server started: PID %d", r.Pid)
@@ -54,9 +57,11 @@ func (r *WbsRunner) Stop() error {
 	p, err := os.FindProcess(r.Pid)
 	if err != nil {
 		runnerLog(err.Error())
+		return err
 	}
 	if err = p.Kill(); err != nil {
 		runnerLog(err.Error())
+		return err
 	}
 	runnerLog("server stopped: PID %d", r.Pid)
 	return nil

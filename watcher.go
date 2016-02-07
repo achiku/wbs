@@ -1,7 +1,6 @@
 package main
 
 import (
-	"log"
 	"os"
 	"regexp"
 
@@ -45,7 +44,8 @@ func (w *WbsWatcher) initWatcher() {
 					watcherLog("start watching %s", path)
 					err := w.w.Add(path)
 					if err != nil {
-						log.Fatal(err)
+						watcherLog("failed to watch file: %s: %s", path, err)
+						return err
 					}
 				}
 			}

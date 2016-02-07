@@ -32,6 +32,8 @@ func (b *WbsBuilder) Build() error {
 	out, err := cmd.CombinedOutput()
 	if err != nil {
 		builderLog(err.Error())
+		builderLog("\n" + string(out))
+		return err
 	}
 	builderLog("\n" + string(out))
 	builderLog("build completed")

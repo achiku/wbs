@@ -3,6 +3,7 @@ package main
 import (
 	"flag"
 	"log"
+	"os"
 
 	"gopkg.in/fsnotify.v1"
 )
@@ -27,23 +28,28 @@ func main() {
 
 	watcher, err := NewWbsWatcher(config)
 	if err != nil {
-		log.Fatal(err)
+		mainLogger("failed to initialize watcher: %s", err)
+		os.Exit(1)
 	}
 	runner, err := NewWbsRunner(config)
 	if err != nil {
-		log.Fatal(err)
+		mainLogger("failed to initialize runner: %s", err)
+		os.Exit(1)
 	}
 	builder, err := NewWbsBuilder(config)
 	if err != nil {
-		log.Fatal(err)
+		mainLogger("failed to initialize builder: %s", err)
+		os.Exit(1)
 	}
 
 	if err := builder.Build(); err != nil {
-		log.Fatal(err)
+		mainLogger("failed to build: %s", err)
+		os.Exit(1)
 	}
 	err = runner.Serve()
 	if err != nil {
-		log.Fatal(err)
+		mainLogger("failed to start server: %s", err)
+		os.Exit(1)
 	}
 	defer runner.Stop()
 
