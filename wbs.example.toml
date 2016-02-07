@@ -11,4 +11,3 @@ build_command = "go"
 build_options = ["build", "-v"]
 
 start_options = ["-v"]
-pid_file = "./tmp/pid"
