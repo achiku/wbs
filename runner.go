@@ -8,7 +8,6 @@ import (
 )
 
 var runnerLog = NewLogFunc("runner")
-var builderLog = NewLogFunc("builder")
 
 type runnerLogWriter struct{}
 
@@ -19,36 +18,9 @@ func (a runnerLogWriter) Write(p []byte) (n int, err error) {
 
 // WbsRunner runner struct
 type WbsRunner struct {
-	Pid            int
-	PidFile        string
-	BuildTargetDir string
-	BuildCommand   string
-	BuildOptions   []string
-	StartCommand   string
-	StartOptions   []string
-}
-
-// createBuildTargetDir create dir for build binary
-func createBuildTargetDir(path string) error {
-	if _, err := os.Stat(path); os.IsNotExist(err) {
-		if err := os.Mkdir(path, 0755); err != nil {
-			builderLog(err.Error())
-		}
-	}
-	return nil
-}
-
-// Build execute build command with configured options
-func (r *WbsRunner) Build() error {
-	builderLog("starting build: %s %s", r.BuildCommand, r.BuildOptions)
-	createBuildTargetDir(r.BuildTargetDir)
-	cmd := exec.Command(r.BuildCommand, r.BuildOptions...)
-	out, err := cmd.CombinedOutput()
-	if err != nil {
-		builderLog(err.Error())
-	}
-	builderLog("\n" + string(out))
-	return nil
+	Pid          int
+	StartCommand string
+	StartOptions []string
 }
 
 // Server execute binary with configured options
@@ -73,7 +45,7 @@ func (r *WbsRunner) Serve() error {
 		runnerLog(err.Error())
 	}
 	r.Pid = cmd.Process.Pid
-	runnerLog("starting server: PID %d", r.Pid)
+	runnerLog("server started: PID %d", r.Pid)
 	return nil
 }
 
@@ -86,21 +58,17 @@ func (r *WbsRunner) Stop() error {
 	if err = p.Kill(); err != nil {
 		runnerLog(err.Error())
 	}
+	runnerLog("server stopped: PID %d", r.Pid)
 	return nil
 }
 
 // NewWbsRunner create runner
 func NewWbsRunner(config *WbsConfig) (*WbsRunner, error) {
 	targetBinary := filepath.Join(config.BuildTargetDir, config.BuildTargetName)
-	buildOptions := append(config.BuildOptions, "-o", targetBinary)
 	r := &WbsRunner{
-		Pid:            -1,
-		PidFile:        config.PidFile,
-		BuildTargetDir: config.BuildTargetDir,
-		BuildCommand:   config.BuildCommand,
-		BuildOptions:   buildOptions,
-		StartCommand:   targetBinary,
-		StartOptions:   config.StartOptions,
+		Pid:          -1,
+		StartCommand: targetBinary,
+		StartOptions: config.StartOptions,
 	}
 	return r, nil
 }

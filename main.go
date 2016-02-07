@@ -33,7 +33,12 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	if err := runner.Build(); err != nil {
+	builder, err := NewWbsBuilder(config)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	if err := builder.Build(); err != nil {
 		log.Fatal(err)
 	}
 	err = runner.Serve()
@@ -51,11 +56,11 @@ func main() {
 					e := event.String()
 					mainLogger("file modified: %s", e)
 					runner.Stop()
-					runner.Build()
+					builder.Build()
 					runner.Serve()
 				}
 			case err := <-watcher.w.Errors:
-				mainLogger("error:", err)
+				mainLogger("error: %s", err)
 			}
 		}
 	}()
