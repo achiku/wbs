@@ -20,7 +20,7 @@ go get -u github.com/achiku/wbs
 
 Save the following net/http application to `main.go`.
 
-```golang
+```go
 package main
 
 import (
