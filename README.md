@@ -1,4 +1,7 @@
-# wbs [![Build Status](https://travis-ci.org/achiku/wbs.svg?branch=master)](https://travis-ci.org/achiku/wbs)
+# wbs
+
+[![Build Status](https://travis-ci.org/achiku/wbs.svg?branch=master)](https://travis-ci.org/achiku/wbs)
+[![LICENSE](https://img.shields.io/github/license/mashape/apistatus.svg)](https://github.com/achiku/wbs/blob/master/LICENSE)
 
 Watch, build, and (re)start Go net/http server, customizeable by toml configuration file
 
@@ -127,3 +130,7 @@ build_options = ["build", "-v"]
 
 start_options = ["-v"]
 ```
+
+## Contributing
+
+Pull requests for new features, bug fixes, and suggestions are welcome!
