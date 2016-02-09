@@ -16,6 +16,7 @@ func TestNewWbsWatcher(t *testing.T) {
 	t.Log(watcher.ExcludeDirs)
 	t.Log(watcher.TargetDirs)
 	t.Log(watcher.TargetFileExt)
+	t.Log(watcher.ExcludeFilePatterns)
 
 	if len(watcher.TargetFileExt) != 3 {
 		t.Errorf("expected 3 but got %d", len(watcher.TargetFileExt))

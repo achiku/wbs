@@ -1,8 +1,10 @@
 package main
 
 import (
+	"log"
 	"os"
 	"regexp"
+	"sort"
 
 	"gopkg.in/fsnotify.v1"
 
@@ -13,15 +15,38 @@ var watcherLog = NewLogFunc("watcher")
 
 // WbsWatcher file wather struct
 type WbsWatcher struct {
-	w             *fsnotify.Watcher
-	TargetDirs    []string
-	ExcludeDirs   []string
-	TargetFileExt []string
+	w                   *fsnotify.Watcher
+	TargetDirs          []string
+	ExcludeDirs         []string
+	TargetFileExt       []string
+	ExcludeFilePatterns []string
 }
 
 // Close close watcher
 func (w *WbsWatcher) Close() {
 	w.w.Close()
+}
+
+func contains(v string, l []string) bool {
+	sort.Strings(l)
+	i := sort.SearchStrings(l, v)
+	if i < len(l) && l[i] == v {
+		return true
+	}
+	return false
+}
+
+func matchContains(v string, excludeStrs []string) bool {
+	for _, rs := range excludeStrs {
+		match, err := filepath.Match(rs, v)
+		if err != nil {
+			log.Fatal(err)
+		}
+		if match {
+			return true
+		}
+	}
+	return false
 }
 
 // initWatcher add watch target files to watcher
@@ -39,14 +64,13 @@ func (w *WbsWatcher) initWatcher() {
 					return nil
 				}
 			}
-			for _, s := range w.TargetFileExt {
-				if filepath.Ext(path) == s {
-					watcherLog("start watching %s", path)
-					err := w.w.Add(path)
-					if err != nil {
-						watcherLog("failed to watch file: %s: %s", path, err)
-						return err
-					}
+			fileExt := filepath.Ext(path)
+			if contains(fileExt, w.TargetFileExt) && !matchContains(path, w.ExcludeFilePatterns) {
+				watcherLog("start watching %s", path)
+				err := w.w.Add(path)
+				if err != nil {
+					watcherLog("failed to watch file: %s: %s", path, err)
+					return err
 				}
 			}
 			return nil
@@ -63,10 +87,11 @@ func NewWbsWatcher(config *WbsConfig) (*WbsWatcher, error) {
 		return watcher, err
 	}
 	watcher = &WbsWatcher{
-		w:             w,
-		TargetDirs:    config.WatchTargetDirs,
-		ExcludeDirs:   config.WatchExcludeDirs,
-		TargetFileExt: config.WatchFileExt,
+		w:                   w,
+		TargetDirs:          config.WatchTargetDirs,
+		ExcludeDirs:         config.WatchExcludeDirs,
+		TargetFileExt:       config.WatchFileExt,
+		ExcludeFilePatterns: config.WatchFileExcludePatterns,
 	}
 	watcher.initWatcher()
 	return watcher, nil

@@ -2,7 +2,6 @@ package main
 
 import (
 	"flag"
-	"log"
 	"os"
 
 	"gopkg.in/fsnotify.v1"
@@ -20,7 +19,8 @@ func main() {
 	if *configFile != "" {
 		config, err = NewWbsConfig(*configFile)
 		if err != nil {
-			log.Fatal(err)
+			mainLogger("failed to create config: %s", err)
+			os.Exit(1)
 		}
 	} else {
 		config = NewWbsDefaultConfig()
@@ -61,7 +61,9 @@ func main() {
 				if event.Op&fsnotify.Write == fsnotify.Write {
 					e := event.String()
 					mainLogger("file modified: %s", e)
-					runner.Stop()
+					if config.RestartProcess {
+						runner.Stop()
+					}
 					builder.Build()
 					runner.Serve()
 				}
