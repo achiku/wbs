@@ -120,6 +120,7 @@ root_path = "."
 watch_target_dirs = ["."]
 watch_exclude_dirs = [".git", "vendor", "tmp"]
 watch_file_ext = [".go", ".tmpl", ".html"]
+watch_file_exclude_pattern = ["*_gen.go"]
 
 build_target_dir = "tmp"
 build_target_name = "myserver"
