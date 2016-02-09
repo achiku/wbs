@@ -18,6 +18,7 @@ func createBuildTargetDir(path string) error {
 	return nil
 }
 
+// WbsBuilder builder struct
 type WbsBuilder struct {
 	BuildTargetDir string
 	BuildCommand   string
@@ -40,7 +41,7 @@ func (b *WbsBuilder) Build() error {
 	return nil
 }
 
-// NewWbsRunner create runner
+// NewWbsBuilder create runner
 func NewWbsBuilder(config *WbsConfig) (*WbsBuilder, error) {
 	targetBinary := filepath.Join(config.BuildTargetDir, config.BuildTargetName)
 	buildOptions := append(config.BuildOptions, "-o", targetBinary)

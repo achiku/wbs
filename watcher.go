@@ -54,7 +54,7 @@ func (w *WbsWatcher) initWatcher() {
 	}
 }
 
-// NewFileWatcher create target file watcher
+// NewWbsWatcher create target file watcher
 func NewWbsWatcher(config *WbsConfig) (*WbsWatcher, error) {
 	var watcher *WbsWatcher
 	w, err := fsnotify.NewWatcher()

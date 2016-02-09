@@ -22,7 +22,7 @@ type WbsConfig struct {
 	WatchFileExt     []string `toml:"watch_file_ext"`
 }
 
-// NewConfig create wbs config struct
+// NewWbsConfig create wbs config struct
 func NewWbsConfig(configFilePath string) (*WbsConfig, error) {
 	f, err := os.Open(configFilePath)
 	if err != nil {
@@ -43,7 +43,7 @@ func NewWbsConfig(configFilePath string) (*WbsConfig, error) {
 	return &config, nil
 }
 
-// NewDefaultConfig create wbs default config
+// NewWbsDefaultConfig create wbs default config
 func NewWbsDefaultConfig() *WbsConfig {
 	config := WbsConfig{
 		RootPath:         ".",
