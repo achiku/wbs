@@ -20,5 +20,5 @@ build_options = ["build", "-v"]
 start_options = ["-v"]
 
 # default true, but it's possible to make this fale, when
-# running a program that don't persist as a process
+# running a program that doesn't persist as a process
 restart_process = true
