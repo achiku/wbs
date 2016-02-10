@@ -37,6 +37,8 @@ func NewWbsConfig(configFilePath string) (*WbsConfig, error) {
 		return nil, err
 	}
 	var config WbsConfig
+	// set default value
+	config.RestartProcess = true
 	if err := toml.Unmarshal(buf, &config); err != nil {
 		log.Fatalf("failed to create Config from file: %s", err)
 		return nil, err

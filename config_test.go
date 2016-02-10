@@ -7,6 +7,10 @@ func TestNewConfig(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
+
+	t.Logf("restart_process: %t", config.RestartProcess)
+	t.Logf("watch_file_exclude_pattern: %s", config.WatchFileExcludePatterns)
+
 	if config.BuildTargetName != "myserver" {
 		t.Errorf("expected myserver but got %s", config.BuildTargetName)
 	}

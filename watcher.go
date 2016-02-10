@@ -37,8 +37,8 @@ func contains(v string, l []string) bool {
 }
 
 func matchContains(v string, excludeStrs []string) bool {
-	for _, rs := range excludeStrs {
-		match, err := filepath.Match(rs, v)
+	for _, es := range excludeStrs {
+		match, err := filepath.Match(es, v)
 		if err != nil {
 			log.Fatal(err)
 		}
