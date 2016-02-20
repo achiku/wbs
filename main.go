@@ -5,7 +5,16 @@ import (
 	"os"
 
 	"gopkg.in/fsnotify.v1"
+
+	shellwords "github.com/mattn/go-shellwords"
 )
+
+var shellParser shellwords.Parser
+
+func init() {
+	shellParser.ParseEnv = true
+	shellParser.ParseBacktick = true
+}
 
 func main() {
 	configFile := flag.String("c", "", "configuration file path")

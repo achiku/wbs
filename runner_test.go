@@ -1,6 +1,9 @@
 package main
 
-import "testing"
+import (
+	"os"
+	"testing"
+)
 
 func TestNewWbsRunner(t *testing.T) {
 	config, err := NewWbsConfig("./wbs.example.toml")
@@ -27,8 +30,11 @@ func TestWbsRunnerServe(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	runner.StartCommand = "nc"
-	runner.StartOptions = []string{"-l", "8508"}
+
+	os.Setenv("TEST_RUNNER_CMD", "nc")
+	os.Setenv("TEST_RUNNER_PORT", "8508")
+	runner.StartCommand = "$TEST_RUNNER_CMD"
+	runner.StartOptions = []string{"-l", "$TEST_RUNNER_PORT"}
 	err = runner.Serve()
 	if err != nil {
 		t.Fatal(err)

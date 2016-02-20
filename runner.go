@@ -5,6 +5,7 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
+	"strings"
 )
 
 var runnerLog = NewLogFunc("runner")
@@ -23,11 +24,15 @@ type WbsRunner struct {
 	StartOptions []string
 }
 
-// Server execute binary with configured options
+// Serve execute binary with configured options
 func (r *WbsRunner) Serve() error {
-	runnerLog("starting server: %s %s", r.StartCommand, r.StartOptions)
-	cmd := exec.Command(r.StartCommand, r.StartOptions...)
-
+	evaledCommand, err := shellParser.Parse(r.StartCommand)
+	evaledOptions, err := shellParser.Parse(strings.Join(r.StartOptions, " "))
+	if err != nil {
+		return err
+	}
+	runnerLog("starting server: %s %s", evaledCommand, evaledOptions)
+	cmd := exec.Command(evaledCommand[0], evaledOptions...)
 	stderr, err := cmd.StderrPipe()
 	if err != nil {
 		runnerLog(err.Error())
@@ -52,6 +57,7 @@ func (r *WbsRunner) Serve() error {
 	return nil
 }
 
+// Stop stops running process
 func (r *WbsRunner) Stop() error {
 	runnerLog("stopping server: PID %d", r.Pid)
 	p, err := os.FindProcess(r.Pid)

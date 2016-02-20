@@ -10,14 +10,16 @@ watch_file_exclude_pattern = [
     "example/lib/bindata.go"
 ]
 
-build_target_dir = "bin"
+# Env vars can be used in build_target_dir, build_target_name,  build_command,
+# build_options, start_options
+build_target_dir = "$GOPATH/bin"
 build_target_name = "myserver"
 build_command = "go"
 build_options = ["build", "-v"]
 
-# command will be  `build_target_dir/build_target_name start_options`
+# start command will be `build_target_dir/build_target_name start_options`
 # in this case bin/myserver -v
-start_options = ["-v"]
+start_options = ["-v", "-p", "$APP_PORT"]
 
 # default true, but it's possible to make this fale, when
 # running a program that doesn't persist as a process

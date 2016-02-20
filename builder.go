@@ -4,6 +4,7 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
+	"strings"
 )
 
 var builderLog = NewLogFunc("builder")
@@ -27,9 +28,16 @@ type WbsBuilder struct {
 
 // Build execute build command with configured options
 func (b *WbsBuilder) Build() error {
-	builderLog("starting build: %s %s", b.BuildCommand, b.BuildOptions)
-	createBuildTargetDir(b.BuildTargetDir)
-	cmd := exec.Command(b.BuildCommand, b.BuildOptions...)
+	evaledCommand, err := shellParser.Parse(b.BuildCommand)
+	evaledTargetDir, err := shellParser.Parse(b.BuildTargetDir)
+	evaledOptions, err := shellParser.Parse(strings.Join(b.BuildOptions, " "))
+	if err != nil {
+		return err
+	}
+
+	builderLog("starting build: %s %s", evaledCommand, evaledOptions)
+	createBuildTargetDir(evaledTargetDir[0])
+	cmd := exec.Command(evaledCommand[0], evaledOptions...)
 	out, err := cmd.CombinedOutput()
 	if err != nil {
 		builderLog(err.Error())
