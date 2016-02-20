@@ -41,7 +41,7 @@ build_command = "go"
 build_options = ["build", "-v"]
 
 # start command will be `build_target_dir/build_target_name start_options`
-# in this case bin/myserver -v
+# in this case $GOPATH/bin/myserver -v
 start_options = ["-v", "-p", "$APP_PORT"]
 
 # default true, but it's possible to make this fale, when
