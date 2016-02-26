@@ -148,40 +148,16 @@ github.com/achiku/wbs/example
 
 Pull requests for new features, bug fixes, and suggestions are welcome!
 
-### Install Gom
+### Install govend
 
-This project is using [gom](https://github.com/mattn/gom) for dependency management.
+This project is using [govend](https://github.com/govend/govend) for dependency management.
 
 - Set `GO15VENDOREXPERIMENT=1` when using Go 1.5.
 - You don't need to set `GO15VENDOREXPERIMENT` when using Go 1.6. It's on by default.
 
 ```
-$ go get -u github.com/mattn/gom
-$ gom install
-$ tree -d vendor
-vendor
-├── bin
-├── github.com
-│   ├── BurntSushi
-│   │   └── toml
-│   │       ├── _examples
-│   │       └── cmd
-│   │           ├── toml-test-decoder
-│   │           ├── toml-test-encoder
-│   │           └── tomlv
-│   └── mattn
-│       └── go-shellwords
-├── gopkg.in
-│   └── fsnotify.v1
-└── pkg
-    └── darwin_amd64
-        ├── github.com
-        │   ├── BurntSushi
-        │   ├── howeyc
-        │   └── mattn
-        └── gopkg.in
-
-20 directories
+$ go get -u github.com/govend/govend
+$ govend -v
 ```
 
 ### Test

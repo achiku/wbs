@@ -1,3 +1,0 @@
-gom 'github.com/BurntSushi/toml', :commit => '5c4df71dfe9ac89ef6287afc05e4c1b16ae65a1e'
-gom 'gopkg.in/fsnotify.v1'
-gom 'github.com/mattn/go-shellwords', :commit => 'f4e566c536cf69158e808ec28ef4182a37fdc981'
