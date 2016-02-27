@@ -5,7 +5,7 @@ import (
 	"log"
 	"os"
 
-	"github.com/naoina/toml"
+	"github.com/BurntSushi/toml"
 )
 
 // WbsConfig wbs configuration struct
