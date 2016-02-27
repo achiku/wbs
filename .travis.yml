@@ -8,5 +8,6 @@ go:
 
 script:
     - go get -u github.com/mattn/gom 
+    - gom install
     - go fmt ./...
     - go test -v
