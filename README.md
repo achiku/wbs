@@ -150,14 +150,14 @@ Pull requests for new features, bug fixes, and suggestions are welcome!
 
 ### Install govend
 
-This project is using [govend](https://github.com/govend/govend) for dependency management.
+This project is using [gom](https://github.com/mattn/gom) for dependency management.
 
 - Set `GO15VENDOREXPERIMENT=1` when using Go 1.5.
 - You don't need to set `GO15VENDOREXPERIMENT` when using Go 1.6. It's on by default.
 
 ```
-$ go get -u github.com/govend/govend
-$ govend -v
+$ go get -u github.com/mattn/gom
+$ gom install
 ```
 
 ### Test
