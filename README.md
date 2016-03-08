@@ -148,7 +148,7 @@ github.com/achiku/wbs/example
 
 Pull requests for new features, bug fixes, and suggestions are welcome!
 
-### Install govend
+### Install gom
 
 This project is using [gom](https://github.com/mattn/gom) for dependency management.
 
