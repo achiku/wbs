@@ -11,6 +11,7 @@ type logFunc func(string, ...interface{})
 
 var logger = log.New(os.Stderr, "", 0)
 
+// NewLogFunc create log func
 func NewLogFunc(prefix string) func(string, ...interface{}) {
 	prefix = fmt.Sprintf("%-11s", prefix)
 	return func(format string, v ...interface{}) {
