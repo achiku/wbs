@@ -8,7 +8,7 @@ Watch, build, and (re)start Go net/http server, customizeable by toml configurat
 
 ## Why created
 
-This tool is yet another auto-rebuild-reloader for go net/http. I had been using [fresh](https://github.com/pilu/fresh), but development of this tool got really inactive from middle of the last year. So, I decided to rewrite from the ground up, adding more flexibility by using toml configuration file, making it possible to use `gb`, `gom`, `make`, or any other command with environmental variables to build binary, adding bunch of tests, and keeping code structure simple so that it will be easy to contribute.
+This tool is yet another auto-rebuild-reloader for go net/http. This tool uses flexible toml configuration file, makes it possible to use `gb`, `gom`, `make`, or any other command with environmental variables to build binary. It also have bunch of tests, and keeping code structure simple to make it easy to contribute.
 
 
 ## Installation
@@ -165,3 +165,7 @@ $ gom install
 ```
 $ go test -v
 ```
+
+### Inspired by
+
+- https://github.com/pilu/fresh
