@@ -42,7 +42,7 @@ func NewWbsDefaultConfig() *WbsConfig {
 		BuildTargetName:          "server",
 		BuildCommand:             "go",
 		BuildOptions:             []string{"build", "-v"},
-		StartOptions:             []string{"-v"},
+		StartOptions:             []string{},
 		WatchFileExt:             []string{".go", ".tmpl", ".html"},
 		WatchFileExcludePatterns: []string{"*_gen.go"},
 		WatchTargetDirs:          []string{"."},
