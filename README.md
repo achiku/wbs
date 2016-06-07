@@ -2,6 +2,7 @@
 
 [![Build Status](https://travis-ci.org/achiku/wbs.svg?branch=master)](https://travis-ci.org/achiku/wbs)
 [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/achiku/wbs/master/LICENSE)
+[![Go Report Card](https://goreportcard.com/badge/github.com/achiku/wbs)](https://goreportcard.com/report/github.com/achiku/wbs)
 
 Watch, build, and (re)start Go net/http server, customizeable by toml configuration file
 
