@@ -1,13 +1,12 @@
 language: go
 
 go:
-    - 1.4
-    - 1.5
-    - 1.6
-    - tip
+  - 1.6
+  - 1.7
+  - tip
 
 script:
-    - go get -u github.com/mattn/gom 
-    - gom install
-    - go fmt ./...
-    - go test -v
+  - go get -u github.com/mattn/gom 
+  - gom install
+  - go fmt ./...
+  - go test -v
