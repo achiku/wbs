@@ -12,12 +12,12 @@ type logFunc func(string, ...interface{})
 var logger = log.New(os.Stderr, "", 0)
 
 // NewLogFunc create log func
-func NewLogFunc(prefix string) func(string, ...interface{}) {
+func NewLogFunc(prefix string) func(string) {
 	prefix = fmt.Sprintf("%-11s", prefix)
-	return func(format string, v ...interface{}) {
+	return func(message string) {
 		now := time.Now()
 		timeString := now.Format("15:04:05")
-		format = fmt.Sprintf("%s %s | %s", timeString, prefix, format)
-		logger.Printf(format, v...)
+		message = fmt.Sprintf("%s %s | ", timeString, prefix) + message
+		logger.Print(message)
 	}
 }

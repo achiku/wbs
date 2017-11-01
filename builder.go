@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"os"
 	"os/exec"
 	"path/filepath"
@@ -35,7 +36,7 @@ func (b *WbsBuilder) Build() error {
 		return err
 	}
 
-	builderLog("starting build: %s %s", evaledCommand, evaledOptions)
+	builderLog(fmt.Sprintf("starting build: %s %s", evaledCommand, evaledOptions))
 	createBuildTargetDir(evaledTargetDir[0])
 	cmd := exec.Command(evaledCommand[0], evaledOptions...)
 	out, err := cmd.CombinedOutput()
