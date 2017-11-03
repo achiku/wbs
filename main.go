@@ -23,30 +23,30 @@ func main() {
 
 	mainLogger := NewLogFunc("main")
 	var (
-		config *WbsConfig
+		config *Config
 		err    error
 	)
 	if *configFile != "" {
-		config, err = NewWbsConfig(*configFile)
+		config, err = NewConfig(*configFile)
 		if err != nil {
 			mainLogger(fmt.Sprintf("failed to create config: %s", err))
 			os.Exit(1)
 		}
 	} else {
-		config = NewWbsDefaultConfig()
+		config = NewDefaultConfig()
 	}
 
-	watcher, err := NewWbsWatcher(config)
+	watcher, err := NewWatcher(config)
 	if err != nil {
 		mainLogger(fmt.Sprintf("failed to initialize watcher: %s", err))
 		os.Exit(1)
 	}
-	runner, err := NewWbsRunner(config)
+	runner, err := NewRunner(config)
 	if err != nil {
 		mainLogger(fmt.Sprintf("failed to initialize runner: %s", err))
 		os.Exit(1)
 	}
-	builder, err := NewWbsBuilder(config)
+	builder, err := NewBuilder(config)
 	if err != nil {
 		mainLogger(fmt.Sprintf("failed to initialize builder: %s", err))
 		os.Exit(1)

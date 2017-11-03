@@ -3,7 +3,7 @@ package main
 import "testing"
 
 func TestNewConfig(t *testing.T) {
-	config, err := NewWbsConfig("./wbs.example.toml")
+	config, err := NewConfig("./wbs.example.toml")
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -17,7 +17,7 @@ func TestNewConfig(t *testing.T) {
 }
 
 func TestNewDefaultConfig(t *testing.T) {
-	config := NewWbsDefaultConfig()
+	config := NewDefaultConfig()
 	if config.BuildTargetName != "server" {
 		t.Errorf("expected server but got %s", config.BuildTargetName)
 	}

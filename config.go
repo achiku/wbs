@@ -6,8 +6,8 @@ import (
 	"github.com/BurntSushi/toml"
 )
 
-// WbsConfig wbs configuration struct
-type WbsConfig struct {
+// Config wbs configuration struct
+type Config struct {
 	RootPath                 string   `toml:"root_path"`
 	RestartProcess           bool     `toml:"restart_process"`
 	BuildTargetDir           string   `toml:"build_target_dir"`
@@ -21,9 +21,9 @@ type WbsConfig struct {
 	WatchFileExcludePatterns []string `toml:"watch_file_exclude_pattern"`
 }
 
-// NewWbsConfig create wbs config struct
-func NewWbsConfig(configFilePath string) (*WbsConfig, error) {
-	var config WbsConfig
+// NewConfig create wbs config struct
+func NewConfig(configFilePath string) (*Config, error) {
+	var config Config
 	// set default value
 	config.RestartProcess = true
 	if _, err := toml.DecodeFile(configFilePath, &config); err != nil {
@@ -33,9 +33,9 @@ func NewWbsConfig(configFilePath string) (*WbsConfig, error) {
 	return &config, nil
 }
 
-// NewWbsDefaultConfig create wbs default config
-func NewWbsDefaultConfig() *WbsConfig {
-	config := WbsConfig{
+// NewDefaultConfig create wbs default config
+func NewDefaultConfig() *Config {
+	config := Config{
 		RootPath:                 ".",
 		RestartProcess:           true,
 		BuildTargetDir:           "tmp",

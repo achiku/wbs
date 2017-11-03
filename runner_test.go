@@ -5,12 +5,12 @@ import (
 	"testing"
 )
 
-func TestNewWbsRunner(t *testing.T) {
-	config, err := NewWbsConfig("./wbs.example.toml")
+func TestNewRunner(t *testing.T) {
+	config, err := NewConfig("./wbs.example.toml")
 	if err != nil {
 		t.Fatal(err)
 	}
-	runner, err := NewWbsRunner(config)
+	runner, err := NewRunner(config)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -21,12 +21,12 @@ func TestNewWbsRunner(t *testing.T) {
 	}
 }
 
-func TestWbsRunnerServe(t *testing.T) {
-	config, err := NewWbsConfig("./wbs.example.toml")
+func TestRunnerServe(t *testing.T) {
+	config, err := NewConfig("./wbs.example.toml")
 	if err != nil {
 		t.Fatal(err)
 	}
-	runner, err := NewWbsRunner(config)
+	runner, err := NewRunner(config)
 	if err != nil {
 		t.Fatal(err)
 	}

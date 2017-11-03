@@ -2,12 +2,12 @@ package main
 
 import "testing"
 
-func TestNewWbsWatcher(t *testing.T) {
-	config, err := NewWbsConfig("./wbs.example.toml")
+func TestNewWatcher(t *testing.T) {
+	config, err := NewConfig("./wbs.example.toml")
 	if err != nil {
 		t.Fatal(err)
 	}
-	watcher, err := NewWbsWatcher(config)
+	watcher, err := NewWatcher(config)
 	if err != nil {
 		t.Fatal(err)
 	}

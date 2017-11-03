@@ -20,15 +20,15 @@ func createBuildTargetDir(path string) error {
 	return nil
 }
 
-// WbsBuilder builder struct
-type WbsBuilder struct {
+// Builder builder struct
+type Builder struct {
 	BuildTargetDir string
 	BuildCommand   string
 	BuildOptions   []string
 }
 
 // Build execute build command with configured options
-func (b *WbsBuilder) Build() error {
+func (b *Builder) Build() error {
 	evaledCommand, err := shellParser.Parse(b.BuildCommand)
 	evaledTargetDir, err := shellParser.Parse(b.BuildTargetDir)
 	evaledOptions, err := shellParser.Parse(strings.Join(b.BuildOptions, " "))
@@ -50,11 +50,11 @@ func (b *WbsBuilder) Build() error {
 	return nil
 }
 
-// NewWbsBuilder create runner
-func NewWbsBuilder(config *WbsConfig) (*WbsBuilder, error) {
+// NewBuilder create runner
+func NewBuilder(config *Config) (*Builder, error) {
 	targetBinary := filepath.Join(config.BuildTargetDir, config.BuildTargetName)
 	buildOptions := append(config.BuildOptions, "-o", targetBinary)
-	b := &WbsBuilder{
+	b := &Builder{
 		BuildTargetDir: config.BuildTargetDir,
 		BuildCommand:   config.BuildCommand,
 		BuildOptions:   buildOptions,

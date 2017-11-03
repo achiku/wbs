@@ -14,8 +14,8 @@ import (
 
 var watcherLog = NewLogFunc("watcher")
 
-// WbsWatcher file wather struct
-type WbsWatcher struct {
+// Watcher file wather struct
+type Watcher struct {
 	w                   *fsnotify.Watcher
 	TargetDirs          []string
 	ExcludeDirs         []string
@@ -24,7 +24,7 @@ type WbsWatcher struct {
 }
 
 // Close close watcher
-func (w *WbsWatcher) Close() {
+func (w *Watcher) Close() {
 	w.w.Close()
 }
 
@@ -51,7 +51,7 @@ func matchContains(v string, excludeStrs []string) bool {
 }
 
 // initWatcher add watch target files to watcher
-func (w *WbsWatcher) initWatcher() {
+func (w *Watcher) initWatcher() {
 	var excludeDirRegexps []*regexp.Regexp
 	for _, excludeDirStr := range w.ExcludeDirs {
 		r := regexp.MustCompile(excludeDirStr)
@@ -79,15 +79,15 @@ func (w *WbsWatcher) initWatcher() {
 	}
 }
 
-// NewWbsWatcher create target file watcher
-func NewWbsWatcher(config *WbsConfig) (*WbsWatcher, error) {
-	var watcher *WbsWatcher
+// NewWatcher create target file watcher
+func NewWatcher(config *Config) (*Watcher, error) {
+	var watcher *Watcher
 	w, err := fsnotify.NewWatcher()
 	if err != nil {
 		watcherLog(fmt.Sprintf("failed to create watcher: %s", err))
 		return watcher, err
 	}
-	watcher = &WbsWatcher{
+	watcher = &Watcher{
 		w:                   w,
 		TargetDirs:          config.WatchTargetDirs,
 		ExcludeDirs:         config.WatchExcludeDirs,

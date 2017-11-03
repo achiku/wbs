@@ -18,15 +18,15 @@ func (a runnerLogWriter) Write(p []byte) (n int, err error) {
 	return len(p), nil
 }
 
-// WbsRunner runner struct
-type WbsRunner struct {
+// Runner runner struct
+type Runner struct {
 	Pid          int
 	StartCommand string
 	StartOptions []string
 }
 
 // Serve execute binary with configured options
-func (r *WbsRunner) Serve() error {
+func (r *Runner) Serve() error {
 	evaledCommand, err := shellParser.Parse(r.StartCommand)
 	evaledOptions, err := shellParser.Parse(strings.Join(r.StartOptions, " "))
 	if err != nil {
@@ -59,7 +59,7 @@ func (r *WbsRunner) Serve() error {
 }
 
 // Stop stops running process
-func (r *WbsRunner) Stop() error {
+func (r *Runner) Stop() error {
 	runnerLog(fmt.Sprintf("stopping server: PID %d", r.Pid))
 	p, err := os.FindProcess(r.Pid)
 	if err != nil {
@@ -74,10 +74,10 @@ func (r *WbsRunner) Stop() error {
 	return nil
 }
 
-// NewWbsRunner create runner
-func NewWbsRunner(config *WbsConfig) (*WbsRunner, error) {
+// NewRunner create runner
+func NewRunner(config *Config) (*Runner, error) {
 	targetBinary := filepath.Join(config.BuildTargetDir, config.BuildTargetName)
-	r := &WbsRunner{
+	r := &Runner{
 		Pid:          -1,
 		StartCommand: targetBinary,
 		StartOptions: config.StartOptions,

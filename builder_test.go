@@ -26,12 +26,12 @@ func TestCreateBuildTargetDir(t *testing.T) {
 	}
 }
 
-func TestWbsBuilderBuild(t *testing.T) {
-	config, err := NewWbsConfig("./wbs.example.toml")
+func TestBuilderBuild(t *testing.T) {
+	config, err := NewConfig("./wbs.example.toml")
 	if err != nil {
 		t.Fatal(err)
 	}
-	builder, err := NewWbsBuilder(config)
+	builder, err := NewBuilder(config)
 	if err != nil {
 		t.Fatal(err)
 	}
