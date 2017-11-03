@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"io"
 	"os"
 	"os/exec"
@@ -31,7 +32,7 @@ func (r *WbsRunner) Serve() error {
 	if err != nil {
 		return err
 	}
-	runnerLog("starting server: %s %s", evaledCommand, evaledOptions)
+	runnerLog(fmt.Sprintf("starting server: %s %s", evaledCommand, evaledOptions))
 	cmd := exec.Command(evaledCommand[0], evaledOptions...)
 	stderr, err := cmd.StderrPipe()
 	if err != nil {
@@ -53,13 +54,13 @@ func (r *WbsRunner) Serve() error {
 		return err
 	}
 	r.Pid = cmd.Process.Pid
-	runnerLog("server started: PID %d", r.Pid)
+	runnerLog(fmt.Sprintf("server started: PID %d", r.Pid))
 	return nil
 }
 
 // Stop stops running process
 func (r *WbsRunner) Stop() error {
-	runnerLog("stopping server: PID %d", r.Pid)
+	runnerLog(fmt.Sprintf("stopping server: PID %d", r.Pid))
 	p, err := os.FindProcess(r.Pid)
 	if err != nil {
 		runnerLog(err.Error())
@@ -69,7 +70,7 @@ func (r *WbsRunner) Stop() error {
 		runnerLog(err.Error())
 		return err
 	}
-	runnerLog("server stopped: PID %d", r.Pid)
+	runnerLog(fmt.Sprintf("server stopped: PID %d", r.Pid))
 	return nil
 }
 

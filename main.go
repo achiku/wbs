@@ -2,6 +2,7 @@ package main
 
 import (
 	"flag"
+	"fmt"
 	"os"
 
 	"gopkg.in/fsnotify.v1"
@@ -28,7 +29,7 @@ func main() {
 	if *configFile != "" {
 		config, err = NewWbsConfig(*configFile)
 		if err != nil {
-			mainLogger("failed to create config: %s", err)
+			mainLogger(fmt.Sprintf("failed to create config: %s", err))
 			os.Exit(1)
 		}
 	} else {
@@ -37,27 +38,27 @@ func main() {
 
 	watcher, err := NewWbsWatcher(config)
 	if err != nil {
-		mainLogger("failed to initialize watcher: %s", err)
+		mainLogger(fmt.Sprintf("failed to initialize watcher: %s", err))
 		os.Exit(1)
 	}
 	runner, err := NewWbsRunner(config)
 	if err != nil {
-		mainLogger("failed to initialize runner: %s", err)
+		mainLogger(fmt.Sprintf("failed to initialize runner: %s", err))
 		os.Exit(1)
 	}
 	builder, err := NewWbsBuilder(config)
 	if err != nil {
-		mainLogger("failed to initialize builder: %s", err)
+		mainLogger(fmt.Sprintf("failed to initialize builder: %s", err))
 		os.Exit(1)
 	}
 
 	if err := builder.Build(); err != nil {
-		mainLogger("failed to build: %s", err)
+		mainLogger(fmt.Sprintf("failed to build: %s", err))
 		os.Exit(1)
 	}
 	err = runner.Serve()
 	if err != nil {
-		mainLogger("failed to start server: %s", err)
+		mainLogger(fmt.Sprintf("failed to start server: %s", err))
 		os.Exit(1)
 	}
 	defer runner.Stop()
@@ -69,7 +70,7 @@ func main() {
 			case event := <-watcher.w.Events:
 				if event.Op&fsnotify.Write == fsnotify.Write {
 					e := event.String()
-					mainLogger("file modified: %s", e)
+					mainLogger(fmt.Sprintf("file modified: %s", e))
 					if config.RestartProcess {
 						runner.Stop()
 					}
@@ -77,7 +78,7 @@ func main() {
 					runner.Serve()
 				}
 			case err := <-watcher.w.Errors:
-				mainLogger("error: %s", err)
+				mainLogger(fmt.Sprintf("error: %s", err))
 			}
 		}
 	}()

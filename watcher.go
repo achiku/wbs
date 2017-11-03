@@ -8,6 +8,7 @@ import (
 
 	"gopkg.in/fsnotify.v1"
 
+	"fmt"
 	"path/filepath"
 )
 
@@ -66,10 +67,10 @@ func (w *WbsWatcher) initWatcher() {
 			}
 			fileExt := filepath.Ext(path)
 			if contains(fileExt, w.TargetFileExt) && !matchContains(path, w.ExcludeFilePatterns) {
-				watcherLog("start watching %s", path)
+				watcherLog(fmt.Sprintf("start watching %s", path))
 				err := w.w.Add(path)
 				if err != nil {
-					watcherLog("failed to watch file: %s: %s", path, err)
+					watcherLog(fmt.Sprintf("failed to watch file: %s: %s", path, err))
 					return err
 				}
 			}
@@ -83,7 +84,7 @@ func NewWbsWatcher(config *WbsConfig) (*WbsWatcher, error) {
 	var watcher *WbsWatcher
 	w, err := fsnotify.NewWatcher()
 	if err != nil {
-		watcherLog("failed to create watcher: %s", err)
+		watcherLog(fmt.Sprintf("failed to create watcher: %s", err))
 		return watcher, err
 	}
 	watcher = &WbsWatcher{
