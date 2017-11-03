@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"net/url"
 	"time"
 )
 
@@ -18,6 +19,7 @@ func loggingMiddleware(next http.Handler) http.Handler {
 }
 
 func helloWorld(w http.ResponseWriter, r *http.Request) {
+	log.Print(url.QueryEscape("Hello, World"))
 	fmt.Fprint(w, "Hello, world!\n")
 }
 
