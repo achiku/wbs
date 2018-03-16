@@ -7,6 +7,8 @@ import (
 	"os/exec"
 	"path/filepath"
 	"strings"
+
+	"github.com/pkg/errors"
 )
 
 var runnerLog = NewLogFunc("runner")
@@ -28,9 +30,12 @@ type Runner struct {
 // Serve execute binary with configured options
 func (r *Runner) Serve() error {
 	evaledCommand, err := shellParser.Parse(r.StartCommand)
+	if err != nil {
+		return errors.Wrapf(err, "failed to parse command: %s", r.StartCommand)
+	}
 	evaledOptions, err := shellParser.Parse(strings.Join(r.StartOptions, " "))
 	if err != nil {
-		return err
+		return errors.Wrapf(err, "failed to parse options: %s", r.StartOptions)
 	}
 	runnerLog(fmt.Sprintf("starting server: %s %s", evaledCommand, evaledOptions))
 	cmd := exec.Command(evaledCommand[0], evaledOptions...)
