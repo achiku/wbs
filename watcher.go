@@ -6,7 +6,7 @@ import (
 	"regexp"
 	"sort"
 
-	"gopkg.in/fsnotify.v1"
+	"github.com/fsnotify/fsnotify"
 
 	"fmt"
 	"path/filepath"

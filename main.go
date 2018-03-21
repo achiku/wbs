@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"os"
 
-	"gopkg.in/fsnotify.v1"
+	"github.com/fsnotify/fsnotify"
 
 	shellwords "github.com/mattn/go-shellwords"
 )
