@@ -1,4 +1,0 @@
-gom 'github.com/BurntSushi/toml', :commit => '5c4df71dfe9ac89ef6287afc05e4c1b16ae65a1e'
-gom 'github.com/fsnotify/fsnotify', :commit => 'c2828203cd70a50dcccfb2761f8b1f8ceef9a8e9'
-gom 'github.com/mattn/go-shellwords', :commit => 'f4e566c536cf69158e808ec28ef4182a37fdc981'
-gom 'github.com/pkg/errors', :commit => '2b3a18b5f0fb6b4f9190549597d3f962c02bc5eb'

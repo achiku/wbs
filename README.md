@@ -145,22 +145,6 @@ github.com/achiku/wbs/example
 14:59:56 runner      |starting server: PID 44036
 ```
 
-## Contributing
-
-Pull requests for new features, bug fixes, and suggestions are welcome!
-
-### Install gom
-
-This project is using [gom](https://github.com/mattn/gom) for dependency management.
-
-- Set `GO15VENDOREXPERIMENT=1` when using Go 1.5.
-- You don't need to set `GO15VENDOREXPERIMENT` when using Go 1.6. It's on by default.
-
-```
-$ go get -u github.com/mattn/gom
-$ gom install
-```
-
 ### Test
 
 ```
