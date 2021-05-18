@@ -1,0 +1,33 @@
+name: test
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+          - ubuntu-latest
+            # Container operations, such as postgres, are only supported on Linux runners
+            # - macOS-latest
+            # - windows-latest
+        go:
+          - "1.16"
+          - "1.15"
+          - "1.14"
+
+    steps:
+      - name: Install Go
+        uses: actions/setup-go/@v2
+        with:
+          go-version: ${{ matrix.go }}
+
+      - name: Checkout code
+        uses: actions/checkout/@v2
+
+      - name: Run test
+        run: go test -v

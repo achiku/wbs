@@ -27,6 +27,14 @@ func TestCreateBuildTargetDir(t *testing.T) {
 }
 
 func TestBuilderBuild(t *testing.T) {
+	targetDir := "test_tmp_dir"
+	err := createBuildTargetDir(targetDir)
+	if err != nil {
+		t.Fatal(err)
+	}
+	defer cleanBuildTargetDir(targetDir)
+
+	os.Setenv("WBS_TEST_SERVER_ROOT", "test_tmp_dir")
 	config, err := NewConfig("./wbs.example.toml")
 	if err != nil {
 		t.Fatal(err)

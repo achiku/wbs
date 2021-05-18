@@ -1,6 +1,6 @@
 # wbs
 
-[![Build Status](https://travis-ci.org/achiku/wbs.svg?branch=master)](https://travis-ci.org/achiku/wbs)
+[![test](https://github.com/achiku/wbs/actions/workflows/test.yml/badge.svg)](https://github.com/achiku/wbs/actions/workflows/test.yml)
 [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/achiku/wbs/master/LICENSE)
 [![Go Report Card](https://goreportcard.com/badge/github.com/achiku/wbs)](https://goreportcard.com/report/github.com/achiku/wbs)
 
@@ -143,22 +143,6 @@ When `main.go` is modified, wbs will rebuild binary, and restart server.
 github.com/achiku/wbs/example
 14:59:56 runner      |starting server: tmp/server [-v]
 14:59:56 runner      |starting server: PID 44036
-```
-
-## Contributing
-
-Pull requests for new features, bug fixes, and suggestions are welcome!
-
-### Install gom
-
-This project is using [gom](https://github.com/mattn/gom) for dependency management.
-
-- Set `GO15VENDOREXPERIMENT=1` when using Go 1.5.
-- You don't need to set `GO15VENDOREXPERIMENT` when using Go 1.6. It's on by default.
-
-```
-$ go get -u github.com/mattn/gom
-$ gom install
 ```
 
 ### Test
