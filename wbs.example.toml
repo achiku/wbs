@@ -12,7 +12,7 @@ watch_file_exclude_pattern = [
 
 # Env vars can be used in build_target_dir, build_target_name,  build_command,
 # build_options, start_options
-build_target_dir = "$GOPATH/bin"
+build_target_dir = "$WBS_TEST_SERVER_ROOT/bin"
 build_target_name = "myserver"
 build_command = "go"
 build_options = ["build", "-v"]
