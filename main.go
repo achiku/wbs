@@ -67,7 +67,11 @@ func main() {
 	go func() {
 		for {
 			select {
-			case event := <-watcher.w.Events:
+			case event, ok := <-watcher.w.Events:
+				if !ok {
+					mainLogger("failed to catch an event")
+				}
+				mainLogger(fmt.Sprintf("event: %s", event))
 				if event.Op&fsnotify.Write == fsnotify.Write {
 					e := event.String()
 					mainLogger(fmt.Sprintf("file modified: %s", e))

@@ -17,6 +17,7 @@ var watcherLog = NewLogFunc("watcher")
 // Watcher file wather struct
 type Watcher struct {
 	w                   *fsnotify.Watcher
+	WatchDirOnly        bool
 	TargetDirs          []string
 	ExcludeDirs         []string
 	TargetFileExt       []string
@@ -65,9 +66,18 @@ func (w *Watcher) initWatcher() {
 					return nil
 				}
 			}
+			if w.WatchDirOnly {
+				watcherLog(fmt.Sprintf("start watching dir %s", path))
+				err := w.w.Add(path)
+				if err != nil {
+					watcherLog(fmt.Sprintf("failed to watch dir: %s: %s", path, err))
+					return err
+				}
+				return nil
+			}
 			fileExt := filepath.Ext(path)
 			if contains(fileExt, w.TargetFileExt) && !matchContains(path, w.ExcludeFilePatterns) {
-				watcherLog(fmt.Sprintf("start watching %s", path))
+				watcherLog(fmt.Sprintf("start watching fle %s", path))
 				err := w.w.Add(path)
 				if err != nil {
 					watcherLog(fmt.Sprintf("failed to watch file: %s: %s", path, err))
@@ -77,6 +87,7 @@ func (w *Watcher) initWatcher() {
 			return nil
 		})
 	}
+	return
 }
 
 // NewWatcher create target file watcher
@@ -89,6 +100,7 @@ func NewWatcher(config *Config) (*Watcher, error) {
 	}
 	watcher = &Watcher{
 		w:                   w,
+		WatchDirOnly:        config.WatchDirOnly,
 		TargetDirs:          config.WatchTargetDirs,
 		ExcludeDirs:         config.WatchExcludeDirs,
 		TargetFileExt:       config.WatchFileExt,
