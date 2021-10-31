@@ -33,6 +33,10 @@ watch_file_exclude_pattern = [
     "example/lib/*_gen.go",
     "example/lib/bindata.go"
 ]
+# this option forces wbs only watch directory, not files.
+# if you are using vim/neovim set this option `true`
+# vim/neovim do not fire events that fsnotify can capture for file.
+watch_dir_only = false
 
 # Env vars can be used in build_target_dir, build_target_name,  build_command,
 # build_options, start_options
