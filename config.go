@@ -19,6 +19,7 @@ type Config struct {
 	WatchExcludeDirs         []string `toml:"watch_exclude_dirs"`
 	WatchFileExt             []string `toml:"watch_file_ext"`
 	WatchFileExcludePatterns []string `toml:"watch_file_exclude_pattern"`
+	WatchDirOnly             bool     `toml:"watch_dir_only"`
 }
 
 // NewConfig create wbs config struct
